@@ -52,7 +52,12 @@ func CreateBook(c *gin.Context) {
 		return
 	}
 
-	data.CreateBook(&book)
+	err = data.CreateBook(&book)
+
+	if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
 
 	c.IndentedJSON(http.StatusCreated, book)
 }

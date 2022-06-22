@@ -14,6 +14,6 @@ func GetBook(id uint64) (models.Book, error) {
 	return book, result.Error
 }
 
-func CreateBook(book *models.Book) {
-	db.Create(book)
+func CreateBook(book *models.Book) error {
+	return db.Create(book).Error
 }
