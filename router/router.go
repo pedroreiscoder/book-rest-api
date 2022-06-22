@@ -9,6 +9,7 @@ func New() *gin.Engine {
 	router := gin.Default()
 
 	router.GET("/api/books", controllers.GetBooks)
+	router.POST("/api/book", controllers.CreateBook)
 
 	return router
 }

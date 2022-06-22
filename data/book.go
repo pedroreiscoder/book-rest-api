@@ -7,3 +7,7 @@ func GetBooks() []models.Book {
 	db.Find(&books)
 	return books
 }
+
+func CreateBook(book *models.Book) {
+	db.Create(book)
+}
