@@ -11,7 +11,13 @@ import (
 )
 
 func GetBooks(c *gin.Context) {
-	books := data.GetBooks()
+	books, err := data.GetBooks()
+
+	if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+
 	c.IndentedJSON(http.StatusOK, books)
 }
 
