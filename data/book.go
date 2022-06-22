@@ -8,6 +8,12 @@ func GetBooks() []models.Book {
 	return books
 }
 
+func GetBook(id uint64) (models.Book, error) {
+	var book models.Book
+	result := db.First(&book, id)
+	return book, result.Error
+}
+
 func CreateBook(book *models.Book) {
 	db.Create(book)
 }
