@@ -61,3 +61,32 @@ func CreateBook(c *gin.Context) {
 
 	c.IndentedJSON(http.StatusCreated, book)
 }
+
+func UpdateBook(c *gin.Context) {
+	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
+
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "Invalid book ID"})
+		return
+	}
+
+	var book models.Book
+	err = c.BindJSON(&book)
+
+	if err != nil {
+		return
+	}
+
+	err = data.UpdateBook(id, book)
+
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Book not found"})
+		} else {
+			c.IndentedJSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		}
+		return
+	}
+
+	c.Status(http.StatusNoContent)
+}
