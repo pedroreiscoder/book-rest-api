@@ -90,3 +90,32 @@ func UpdateBook(c *gin.Context) {
 
 	c.Status(http.StatusNoContent)
 }
+
+func DeleteBook(c *gin.Context) {
+	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
+
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "Invalid book ID"})
+		return
+	}
+
+	book, err := data.GetBook(id)
+
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			c.IndentedJSON(http.StatusNotFound, gin.H{"message": "Book not found"})
+		} else {
+			c.IndentedJSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		}
+		return
+	}
+
+	err = data.DeleteBook(&book)
+
+	if err != nil {
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"message": err.Error()})
+		return
+	}
+
+	c.Status(http.StatusNoContent)
+}

@@ -33,3 +33,7 @@ func UpdateBook(id uint64, newBook models.Book) error {
 	result = db.Save(&book)
 	return result.Error
 }
+
+func DeleteBook(book *models.Book) error {
+	return db.Delete(book).Error
+}

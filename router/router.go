@@ -12,6 +12,7 @@ func New() *gin.Engine {
 	router.GET("/api/book/:id", controllers.GetBook)
 	router.POST("/api/book", controllers.CreateBook)
 	router.PUT("/api/book/:id", controllers.UpdateBook)
+	router.DELETE("/api/book/:id", controllers.DeleteBook)
 
 	return router
 }
