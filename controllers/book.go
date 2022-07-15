@@ -49,6 +49,7 @@ func CreateBook(c *gin.Context) {
 	err := c.BindJSON(&book)
 
 	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "Invalid book"})
 		return
 	}
 
@@ -74,6 +75,7 @@ func UpdateBook(c *gin.Context) {
 	err = c.BindJSON(&book)
 
 	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "Invalid book"})
 		return
 	}
 
